@@ -15,4 +15,5 @@ dependencyResolutionManagement {
 
 rootProject.name = "Request_TZ"
 include(":app")
- 
+include(":data")
+include(":domain")
