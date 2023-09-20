@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.example.request_tz.presentation.catalog.CatalogScreen
 
 @Composable
 fun NavGraph(
@@ -14,7 +15,7 @@ fun NavGraph(
         startDestination = Screens.Catalog.route
     ) {
         composable(Screens.Catalog.route){
-            // Catalog Screen
+            CatalogScreen()
         }
         composable(Screens.CardItem.route){
             // CardItem screen
