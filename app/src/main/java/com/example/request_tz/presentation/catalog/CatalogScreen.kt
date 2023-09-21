@@ -1,5 +1,10 @@
 package com.example.request_tz.presentation.catalog
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.scaleIn
+import androidx.compose.animation.scaleOut
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -116,6 +121,7 @@ val ItemCardItems = listOf(
 var currentCategory = mutableIntStateOf(tabItems[0].id)
 var isCartVisible = mutableStateOf(false)
 var sum = mutableFloatStateOf(0f)
+
 @Composable
 fun CatalogScreen(
     modifier: Modifier = Modifier
@@ -139,7 +145,12 @@ fun CatalogScreen(
             Categories()
             ItemCardList()
         }
-        if(isCartVisible.value){
+
+        AnimatedVisibility(
+            visible = isCartVisible.value,
+            enter = scaleIn() + fadeIn(),
+            exit = scaleOut() + fadeOut()
+        ) {
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -176,7 +187,6 @@ fun CatalogScreen(
             }
         }
     }
-
 }
 
 @Composable
