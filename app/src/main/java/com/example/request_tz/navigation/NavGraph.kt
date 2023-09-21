@@ -15,7 +15,7 @@ fun NavGraph(
 ) {
     NavHost(
         navController = navHostController,
-        startDestination = Screens.Catalog.route
+        startDestination = Screens.SplashScreen.route
     ) {
         composable(Screens.Catalog.route){
             CatalogScreen()
@@ -27,7 +27,7 @@ fun NavGraph(
             CartScreen()
         }
         composable(Screens.SplashScreen.route){
-            SplashScreen()
+            SplashScreen(navHostController)
         }
     }
 }
