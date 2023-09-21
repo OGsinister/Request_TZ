@@ -54,7 +54,12 @@ val ItemCardItems = listOf(
         description = "Ролл с нежным мясом камчатского краба, копченой курицей и авокадо.Украшается соусом\\\"Унаги\\\" и легким майонезом  Комплектуется бесплатным набором для роллов (Соевый соус Лайт 35г., васаби 6г., имбирь 15г.). +1 набор за каждые 600 рублей в заказе",
         image = 1,
         priceCurrent = 4700,
-        priceOld = 0
+        priceOld = 800,
+        measure = 250,
+        measure_unit = "г",
+        tag_ids = listOf(
+            1,2
+        )
     ),
     ItemCard(
         id = 2,
@@ -63,7 +68,12 @@ val ItemCardItems = listOf(
         description = "Ролл с нежным мясом камчатского краба, копченой курицей и авокадо.Украшается соусом\\\"Унаги\\\" и легким майонезом  Комплектуется бесплатным набором для роллов (Соевый соус Лайт 35г., васаби 6г., имбирь 15г.). +1 набор за каждые 600 рублей в заказе",
         image = 1,
         priceCurrent = 4700,
-        priceOld = 0
+        priceOld = 0,
+        measure = 250,
+        measure_unit = "г",
+        tag_ids = listOf(
+            4
+        )
     ),
     ItemCard(
         id = 3,
@@ -72,34 +82,38 @@ val ItemCardItems = listOf(
         description = "Ролл с нежным мясом камчатского краба, копченой курицей и авокадо.Украшается соусом\\\"Унаги\\\" и легким майонезом  Комплектуется бесплатным набором для роллов (Соевый соус Лайт 35г., васаби 6г., имбирь 15г.). +1 набор за каждые 600 рублей в заказе",
         image = 1,
         priceCurrent = 4700,
-        priceOld = 0
+        priceOld = null,
+        measure = 250,
+        measure_unit = "г",
+        tag_ids = listOf()
     ),
     ItemCard(
         id = 3,
         categoryId = 672524,
-        name = "Такеши Китано 8шт",
+        name = "Митаки 8шт",
         description = "Ролл с нежным мясом камчатского краба, копченой курицей и авокадо.Украшается соусом\\\"Унаги\\\" и легким майонезом  Комплектуется бесплатным набором для роллов (Соевый соус Лайт 35г., васаби 6г., имбирь 15г.). +1 набор за каждые 600 рублей в заказе",
         image = 1,
         priceCurrent = 4700,
-        priceOld = 0
+        priceOld = null,
+        measure = 250,
+        measure_unit = "г",
+        tag_ids = listOf(
+            1,2
+        )
     ),
     ItemCard(
         id = 3,
         categoryId = 672524,
-        name = "Филадельфия Кунжут 8шт",
+        name = "Митаки 8шт",
         description = "Ролл с нежным мясом камчатского краба, копченой курицей и авокадо.Украшается соусом\\\"Унаги\\\" и легким майонезом  Комплектуется бесплатным набором для роллов (Соевый соус Лайт 35г., васаби 6г., имбирь 15г.). +1 набор за каждые 600 рублей в заказе",
         image = 1,
         priceCurrent = 4700,
-        priceOld = 0
-    ),
-    ItemCard(
-        id = 3,
-        categoryId = 672524,
-        name = "Йоко Оно 8шт",
-        description = "Ролл с нежным мясом камчатского краба, копченой курицей и авокадо.Украшается соусом\\\"Унаги\\\" и легким майонезом  Комплектуется бесплатным набором для роллов (Соевый соус Лайт 35г., васаби 6г., имбирь 15г.). +1 набор за каждые 600 рублей в заказе",
-        image = 1,
-        priceCurrent = 4700,
-        priceOld = 0
+        priceOld = null,
+        measure = 250,
+        measure_unit = "г",
+        tag_ids = listOf(
+            1,2
+        )
     )
 )
 var currentCategory = mutableIntStateOf(tabItems[0].id)
@@ -150,5 +164,12 @@ data class ItemCard(
     val description: String,
     val image: Int,
     val priceCurrent: Int,
-    val priceOld: Int
+    val priceOld: Int? = null,
+    val measure: Int,
+    val measure_unit: String,
+    val tag_ids: List<Int>
+)
+data class Tags(
+    val id: Int,
+    val name: String
 )

@@ -3,9 +3,11 @@ package com.example.request_tz.presentation.catalog
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -24,14 +26,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.request_tz.R
+import com.example.request_tz.presentation.util.GetTag
 import com.example.request_tz.ui.theme.cardBackground
 import com.example.request_tz.ui.theme.mainColor
 
@@ -49,13 +53,34 @@ fun ItemCardListItem(itemCard: ItemCard){
                 // navigate
             }
     ) {
-        Image(
+        Box(
             modifier = Modifier
-                .height(170.dp)
-                .width(167.dp),
-            painter = painterResource(id = R.drawable.photo),
-            contentDescription = null
-        )
+                .fillMaxWidth()
+        ){
+            Image(
+                modifier = Modifier
+                    .height(170.dp)
+                    .width(167.dp),
+                painter = painterResource(id = R.drawable.photo),
+                contentDescription = null
+            )
+            if(itemCard.tag_ids.isNotEmpty()){
+                Row(
+                    verticalAlignment = Alignment.Top,
+                    horizontalArrangement = Arrangement.spacedBy(5.dp),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(start = 8.dp, top = 8.dp)
+                ) {
+                    itemCard.tag_ids.forEach{
+                        Image(
+                            imageVector = GetTag(tag = it),
+                            contentDescription = null,
+                        )
+                    }
+                }
+            }
+        }
         Column(
             modifier = Modifier.padding(12.dp),
             verticalArrangement = Arrangement.spacedBy(4.dp)
@@ -68,13 +93,13 @@ fun ItemCardListItem(itemCard: ItemCard){
             Text(
                 modifier = Modifier
                     .align(alignment = Alignment.Start),
-                text = "500 гр",
+                text = "${itemCard.measure} ${itemCard.measure_unit} ",
                 color = Color.Black.copy(alpha = 0.6f)
             )
             if(buyItem.intValue == 0){
                 Button(
                     colors = ButtonDefaults.buttonColors(Color.White),
-                    shape = RectangleShape,
+                    shape = RoundedCornerShape(12.dp),
                     modifier = Modifier
                         .padding(top = 12.dp)
                         .clip(RoundedCornerShape(5.dp))
@@ -94,11 +119,15 @@ fun ItemCardListItem(itemCard: ItemCard){
                         color = Color.Black,
                         fontSize = 16.sp
                     )
-                    Text(
-                        text = itemCard.priceOld.toString(),
-                        color = Color.Black,
-                        fontSize = 16.sp
-                    )
+                    if(itemCard.priceOld != null){
+                        Spacer(modifier = Modifier.padding(8.dp))
+                        Text(
+                            text = itemCard.priceOld.toString(),
+                            color = Color.Black,
+                            fontSize = 16.sp,
+                            style = TextStyle(textDecoration = TextDecoration.LineThrough)
+                        )
+                    }
                 }
             }else{
                 Row(
