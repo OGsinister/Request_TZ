@@ -9,25 +9,20 @@ import com.google.gson.Gson
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
+private val json = Gson()
 class ApiRepositoryImpl @Inject constructor(
     @ApplicationContext private val context: Context
 ): ApiRepository {
-    private var json = Gson()
-
     override fun getCategories(): List<Categories> {
-        return json.fromJson(
-            json.getDataFromApi("Categories",context), Array<Categories>::class.java
-        ).toList()
+        return Categories().getJsonData(context)
     }
-
-    override fun getProducts(): List<Products> {
-        return json.fromJson(
-            json.getDataFromApi("Products",context), Array<Products>::class.java
-        ).toList()
+    override fun getProducts(categoryId: Int): List<Products> {
+        return Products().getJsonData(context).filter {
+            it.category_id == categoryId
+        }
     }
-
     override fun getTags(): List<Tags> {
-        return json.fromJson(json.getDataFromApi("Tags", context), Array<Tags>::class.java).toList()
+        return Tags().getJsonData(context)
     }
 }
 
@@ -35,4 +30,20 @@ fun Gson.getDataFromApi(name: String, context: Context): String {
     return context.assets.open("api/$name.json")
         .bufferedReader()
         .use { it.readText() }
+}
+
+fun Products.getJsonData(@ApplicationContext context: Context): List<Products> {
+    return json.fromJson(
+        json.getDataFromApi("Products",context), Array<Products>::class.java
+    ).toList()
+}
+fun Categories.getJsonData(@ApplicationContext context: Context): List<Categories>{
+    return json.fromJson(
+        json.getDataFromApi("Categories", context), Array<Categories>::class.java
+    ).toList()
+}
+fun Tags.getJsonData(@ApplicationContext context: Context): List<Tags> {
+    return json.fromJson(
+        json.getDataFromApi("Tags", context), Array<Tags>::class.java
+    ).toList()
 }

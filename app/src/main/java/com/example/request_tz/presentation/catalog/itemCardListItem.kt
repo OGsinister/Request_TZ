@@ -18,8 +18,6 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -32,15 +30,16 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.request_tz.R
+import com.example.request_tz.domain.model.Products
 import com.example.request_tz.ui.theme.cardBackground
 import com.example.request_tz.ui.theme.mainColor
+import com.example.request_tz.view_models.CatalogViewModel
 
 @Composable
-fun ItemCardListItem(itemCard: ItemCard){
-    val buyItem = remember{
-        mutableIntStateOf(0)
-    }
-
+fun ItemCardListItem(
+    product: Products,
+    viewModel: CatalogViewModel
+){
     Card(
         colors = CardDefaults.cardColors(cardBackground),
         modifier = Modifier
@@ -61,7 +60,7 @@ fun ItemCardListItem(itemCard: ItemCard){
             verticalArrangement = Arrangement.spacedBy(4.dp)
         ){
             Text(
-                text = itemCard.name,
+                text = product.name!!,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis
             )
@@ -71,7 +70,7 @@ fun ItemCardListItem(itemCard: ItemCard){
                 text = "500 гр",
                 color = Color.Black.copy(alpha = 0.6f)
             )
-            if(buyItem.intValue == 0){
+            if(viewModel.buyCounter.intValue == 0){
                 Button(
                     colors = ButtonDefaults.buttonColors(Color.White),
                     shape = RectangleShape,
@@ -84,18 +83,18 @@ fun ItemCardListItem(itemCard: ItemCard){
                         /**
                          * Показать корзину
                          */
-                        isCartVisible.value = !isCartVisible.value
+                        viewModel.isCartVisible.value = !viewModel.isCartVisible.value
                         //sum.floatValue += itemCard.priceCurrent
-                        buyItem.intValue += 1
+                        viewModel.buyCounter.intValue += 1
                     }
                 ) {
                     Text(
-                        text = itemCard.priceCurrent.toString(),
+                        text = product.price_current.toString(),
                         color = Color.Black,
                         fontSize = 16.sp
                     )
                     Text(
-                        text = itemCard.priceOld.toString(),
+                        text = product.price_old.toString(),
                         color = Color.Black,
                         fontSize = 16.sp
                     )
@@ -108,7 +107,7 @@ fun ItemCardListItem(itemCard: ItemCard){
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.SpaceBetween
                 ){
-                    Button(onClick = { buyItem.intValue -= 1 },
+                    Button(onClick = { viewModel.buyCounter.intValue -= 1 },
                         shape = RoundedCornerShape(8.dp),
                         colors = ButtonDefaults.buttonColors(Color.White),
                         contentPadding = PaddingValues(12.dp)
@@ -119,8 +118,8 @@ fun ItemCardListItem(itemCard: ItemCard){
                             contentDescription = null
                         )
                     }
-                    Text(text = buyItem.intValue.toString())
-                    Button(onClick = { buyItem.intValue += 1 },
+                    Text(text = viewModel.buyCounter.intValue.toString())
+                    Button(onClick = { viewModel.buyCounter.intValue += 1 },
                         colors = ButtonDefaults.buttonColors(Color.White),
                         shape = RoundedCornerShape(8.dp),
                         contentPadding = PaddingValues(12.dp)

@@ -81,10 +81,10 @@ dependencies {
     // Gson
     implementation("com.google.code.gson:gson:2.9.0")
 
-    // Hilt
     implementation("com.google.dagger:hilt-android:2.48")
     kapt("com.google.dagger:hilt-android-compiler:2.47")
     implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
+    // Hilt
 
     // Airbnb lottie
     implementation("com.airbnb.android:lottie-compose:6.1.0")
