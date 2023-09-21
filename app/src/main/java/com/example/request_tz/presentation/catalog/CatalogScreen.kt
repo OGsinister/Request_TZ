@@ -7,30 +7,14 @@ import androidx.compose.animation.scaleIn
 import androidx.compose.animation.scaleOut
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Icon
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import com.example.request_tz.R
-import com.example.request_tz.ui.theme.mainColor
 
 val tabItems = listOf(
     CategoriesList(
@@ -129,7 +113,7 @@ fun CatalogScreen(
     Column(
         verticalArrangement = Arrangement.SpaceBetween,
         modifier = Modifier.fillMaxSize()
-    ){
+    ) {
         Column(
             modifier = modifier
                 .fillMaxSize()
@@ -140,73 +124,17 @@ fun CatalogScreen(
                     bottom = 0.dp
                 )
                 .weight(1f)
-        ){
+        ) {
             TopLine()
             Categories()
             ItemCardList()
         }
-
         AnimatedVisibility(
             visible = isCartVisible.value,
             enter = scaleIn() + fadeIn(),
             exit = scaleOut() + fadeOut()
         ) {
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .weight(0.12f),
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Button(
-                    shape = RoundedCornerShape(8.dp),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(
-                            top = 12.dp,
-                            start = 16.dp,
-                            end = 16.dp,
-                            bottom = 12.dp
-                        ),
-                    onClick = {
-                        /**
-                         * navigate to Cart screen
-                         */
-                    },
-                    colors = ButtonDefaults.buttonColors(mainColor)
-                ) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.ic_cart),
-                        contentDescription = null
-                    )
-                    Spacer(modifier = Modifier.padding(5.dp))
-                    Text(
-                        text = sum.floatValue.toString()
-                    )
-                }
-            }
-        }
-    }
-}
-
-@Composable
-fun Categories(){
-    LazyRow{
-        items(tabItems){
-            CategoryList(category = it)
-        }
-    }
-}
-
-@Composable
-fun ItemCardList(){
-    LazyVerticalGrid(
-        modifier = Modifier.fillMaxSize(),
-        columns = GridCells.Fixed(2),
-        horizontalArrangement = Arrangement.spacedBy(12.dp)
-    ){
-        items(ItemCardItems){
-            ItemCardListItem(it)
+            FixedCartButton()
         }
     }
 }

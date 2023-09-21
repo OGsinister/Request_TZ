@@ -17,7 +17,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             Request_TZTheme {
                 navHostController = rememberNavController()
-                NavGraph(navHostController = navHostController, )
+                NavGraph(navHostController = navHostController)
             }
         }
     }
