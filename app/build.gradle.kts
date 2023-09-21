@@ -1,6 +1,8 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("com.google.dagger.hilt.android")
+    kotlin("kapt")
 }
 
 android {
@@ -64,6 +66,10 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
 
+    // Data and Domain modules
+    implementation(project(":data"))
+    implementation(project(":domain"))
+
     // Test
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
@@ -71,4 +77,12 @@ dependencies {
 
     // Navigation
     implementation("androidx.navigation:navigation-compose:2.7.2")
+
+    // Gson
+    implementation("com.google.code.gson:gson:2.9.0")
+
+    // Hilt
+    implementation("com.google.dagger:hilt-android:2.48")
+    kapt("com.google.dagger:hilt-android-compiler:2.47")
+    implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
 }
