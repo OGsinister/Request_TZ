@@ -1,5 +1,6 @@
 package com.example.request_tz.view_models
 
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import com.example.request_tz.domain.model.Categories
@@ -14,11 +15,17 @@ import javax.inject.Inject
 @HiltViewModel
 class CatalogViewModel @Inject constructor(
     private val getCategories: GetCategoriesUseCase,
-    private val getProducts: GetProductsUseCase,
-    private val getTags: GetTagsUseCase
+    private val getTags: GetTagsUseCase,
+    private val getProductsUseCase: GetProductsUseCase
 ): ViewModel() {
+    var isCartVisible = mutableStateOf(false)
+    val buyCounter = mutableIntStateOf(0)
+
     private val _categories = mutableStateOf(listOf(Categories()))
     var categories = _categories
+
+    private var _currentCategory = mutableIntStateOf(676153)
+    var currentCategory = _currentCategory
 
     private val _products = mutableStateOf(listOf(Products()))
     var products = _products
@@ -26,13 +33,17 @@ class CatalogViewModel @Inject constructor(
     private val _tags = mutableStateOf(listOf(Tags()))
     var tags = _tags
 
+    // must make "on event" func
+    fun getTags(){
+        _tags.value = getTags.invoke()
+    }
+    fun changeCategory(newCategory: Int){
+        _currentCategory.intValue = newCategory
+    }
     fun getCategories(){
         _categories.value = getCategories.invoke()
     }
     fun getProducts(){
-        _products.value = getProducts.invoke()
-    }
-    fun getTags(){
-        _tags.value = getTags.invoke()
+        _products.value = getProductsUseCase.invoke(currentCategory.intValue)
     }
 }

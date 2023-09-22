@@ -17,9 +17,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.example.request_tz.R
 import com.example.request_tz.ui.theme.mainColor
-
+import com.example.request_tz.view_models.CatalogViewModel
 @Composable
-fun FixedCartButton() {
+fun FixedCartButton(viewModel: CatalogViewModel) {
     /**
      * navigate to Cart screen
      */
@@ -52,7 +52,7 @@ fun FixedCartButton() {
             )
             Spacer(modifier = Modifier.padding(5.dp))
             Text(
-                text = "buyItem.intValue.toString()"
+                text = viewModel.buyCounter.intValue.toString()
             )
         }
     }

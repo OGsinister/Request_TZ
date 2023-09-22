@@ -17,18 +17,21 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.request_tz.domain.model.Categories
 import com.example.request_tz.ui.theme.mainColor
+import com.example.request_tz.view_models.CatalogViewModel
 
 @Composable
 fun CategoryList(
-    category: CategoriesList
+    category: Categories,
+    viewModel: CatalogViewModel
 ){
     Column(
         modifier = Modifier
             .clip(RoundedCornerShape(8.dp))
             .fillMaxWidth()
             .background(
-                color = if (category.id == currentCategory.intValue)
+                color = if (category.id == viewModel.currentCategory.intValue)
                     mainColor
                 else
                     Color.Transparent
@@ -37,17 +40,22 @@ fun CategoryList(
         horizontalAlignment = Alignment.CenterHorizontally
     ){
         Button(
-            onClick = { currentCategory.intValue = category.id },
+            onClick = {
+                viewModel.changeCategory(category.id!!)
+                viewModel.getProducts()
+            },
             colors = ButtonDefaults.buttonColors(Color.Transparent)
         ) {
-            Text(
-                text = category.name,
-                fontSize = 16.sp,
-                color = if(category.id == currentCategory.intValue)
-                    Color.White
-                else
-                    Color.Black
-            )
+            category.name?.let {
+                Text(
+                    text = it,
+                    fontSize = 16.sp,
+                    color = if(category.id == viewModel.currentCategory.intValue)
+                        Color.White
+                    else
+                        Color.Black
+                )
+            }
         }
     }
     Spacer(modifier = Modifier.padding(8.dp))

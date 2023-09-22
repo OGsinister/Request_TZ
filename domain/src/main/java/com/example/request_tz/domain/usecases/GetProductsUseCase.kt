@@ -6,8 +6,8 @@ import javax.inject.Inject
 
 class GetProductsUseCase @Inject constructor(
     private val repository: ApiRepository
-){
-    operator fun invoke(): List<Products> {
-        return repository.getProducts()
+) {
+    operator fun invoke(categoryId: Int): List<Products> {
+        return repository.getProducts(categoryId)
     }
 }

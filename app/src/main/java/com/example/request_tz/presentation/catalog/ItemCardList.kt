@@ -8,15 +8,21 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.example.request_tz.domain.model.Products
+import com.example.request_tz.view_models.CatalogViewModel
+
 @Composable
-fun ItemCardList(){
+fun ItemCardList(
+    category: List<Products>,
+    viewModel: CatalogViewModel
+){
     LazyVerticalGrid(
         modifier = Modifier.fillMaxSize(),
         columns = GridCells.Fixed(2),
         horizontalArrangement = Arrangement.spacedBy(12.dp)
     ){
-        items(ItemCardItems){
-            ItemCardListItem(it)
+        items(category){
+            ItemCardListItem(it,viewModel)
         }
     }
 }
