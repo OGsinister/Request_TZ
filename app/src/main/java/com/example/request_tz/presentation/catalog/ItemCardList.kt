@@ -8,13 +8,15 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.example.request_tz.domain.model.Products
 import com.example.request_tz.view_models.CatalogViewModel
 
 @Composable
 fun ItemCardList(
     category: List<Products>,
-    viewModel: CatalogViewModel
+    viewModel: CatalogViewModel,
+    navController: NavController
 ){
     LazyVerticalGrid(
         modifier = Modifier.fillMaxSize(),
@@ -22,7 +24,7 @@ fun ItemCardList(
         horizontalArrangement = Arrangement.spacedBy(12.dp)
     ){
         items(category){
-            ItemCardListItem(it,viewModel)
+            ItemCardListItem(it, viewModel, navController)
         }
     }
 }

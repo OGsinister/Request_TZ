@@ -12,12 +12,14 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.example.request_tz.view_models.CatalogViewModel
 
 @Composable
 fun CatalogScreen(
     viewModel: CatalogViewModel,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    navController: NavController
 ) {
     val categories = viewModel.categories
     val products = viewModel.products
@@ -45,7 +47,7 @@ fun CatalogScreen(
         ) {
             TopLine()
             Categories(categories.value, viewModel)
-            ItemCardList(products.value, viewModel)
+            ItemCardList(products.value, viewModel, navController)
         }
         AnimatedVisibility(
             visible = isCartVisible.value,

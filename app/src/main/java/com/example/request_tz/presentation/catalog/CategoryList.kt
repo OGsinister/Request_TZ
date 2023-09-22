@@ -26,15 +26,14 @@ fun CategoryList(
     category: Categories,
     viewModel: CatalogViewModel
 ){
+    val currentCategory = viewModel.currentCategory.intValue
+    val columnColor = if (category.id == currentCategory) mainColor else Color.Transparent
     Column(
         modifier = Modifier
-            .clip(RoundedCornerShape(8.dp))
+             .clip(RoundedCornerShape(8.dp))
             .fillMaxWidth()
             .background(
-                color = if (category.id == viewModel.currentCategory.intValue)
-                    mainColor
-                else
-                    Color.Transparent
+                color = columnColor
             ),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
@@ -50,7 +49,7 @@ fun CategoryList(
                 Text(
                     text = it,
                     fontSize = 16.sp,
-                    color = if(category.id == viewModel.currentCategory.intValue)
+                    color = if(category.id == currentCategory)
                         Color.White
                     else
                         Color.Black

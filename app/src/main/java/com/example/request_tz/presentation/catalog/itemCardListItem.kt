@@ -3,6 +3,7 @@ package com.example.request_tz.presentation.catalog
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -29,8 +30,12 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.request_tz.R
 import com.example.request_tz.domain.model.Products
+import com.example.request_tz.navigation.Screens
+import com.example.request_tz.presentation.util.GetTag
+import com.example.request_tz.presentation.util.ShowOldPrice
 import com.example.request_tz.ui.theme.cardBackground
 import com.example.request_tz.ui.theme.mainColor
 import com.example.request_tz.view_models.CatalogViewModel
@@ -38,23 +43,47 @@ import com.example.request_tz.view_models.CatalogViewModel
 @Composable
 fun ItemCardListItem(
     product: Products,
-    viewModel: CatalogViewModel
+    viewModel: CatalogViewModel,
+    navController: NavController
 ){
     Card(
         colors = CardDefaults.cardColors(cardBackground),
         modifier = Modifier
             .padding(top = 10.dp)
             .clickable {
-                // navigate
+                navController.navigate(
+                    "${Screens.CardItem.route}/${product.id}"
+                )
             }
     ) {
-        Image(
+        Box(
             modifier = Modifier
-                .height(170.dp)
-                .width(167.dp),
-            painter = painterResource(id = R.drawable.photo),
-            contentDescription = null
-        )
+                .fillMaxWidth()
+        ){
+            Image(
+                modifier = Modifier
+                    .height(170.dp)
+                    .width(167.dp),
+                painter = painterResource(id = R.drawable.photo),
+                contentDescription = null
+            )
+            if(product.tag_ids!!.isNotEmpty()){
+                Row(
+                    verticalAlignment = Alignment.Top,
+                    horizontalArrangement = Arrangement.spacedBy(5.dp),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(start = 8.dp, top = 8.dp)
+                ) {
+                    product.tag_ids!!.forEach{
+                        Image(
+                            imageVector = GetTag(tag = it),
+                            contentDescription = null,
+                        )
+                    }
+                }
+            }
+        }
         Column(
             modifier = Modifier.padding(12.dp),
             verticalArrangement = Arrangement.spacedBy(4.dp)
@@ -65,73 +94,78 @@ fun ItemCardListItem(
                 overflow = TextOverflow.Ellipsis
             )
             Text(
-                modifier = Modifier
-                    .align(alignment = Alignment.Start),
-                text = "500 гр",
+                text = "${product.measure} ${product.measure_unit}",
                 color = Color.Black.copy(alpha = 0.6f)
             )
+
             if(viewModel.buyCounter.intValue == 0){
-                Button(
-                    colors = ButtonDefaults.buttonColors(Color.White),
-                    shape = RectangleShape,
-                    modifier = Modifier
-                        .padding(top = 12.dp)
-                        .clip(RoundedCornerShape(5.dp))
-                        .fillMaxWidth()
-                        .align(Alignment.CenterHorizontally),
-                    onClick = {
-                        /**
-                         * Показать корзину
-                         */
-                        viewModel.isCartVisible.value = !viewModel.isCartVisible.value
-                        //sum.floatValue += itemCard.priceCurrent
-                        viewModel.buyCounter.intValue += 1
-                    }
-                ) {
-                    Text(
-                        text = product.price_current.toString(),
-                        color = Color.Black,
-                        fontSize = 16.sp
-                    )
-                    Text(
-                        text = product.price_old.toString(),
-                        color = Color.Black,
-                        fontSize = 16.sp
-                    )
-                }
+                AddToCart(viewModel = viewModel, product = product)
             }else{
-                Row(
-                    modifier = Modifier
-                        .padding(top = 12.dp)
-                        .fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ){
-                    Button(onClick = { viewModel.buyCounter.intValue -= 1 },
-                        shape = RoundedCornerShape(8.dp),
-                        colors = ButtonDefaults.buttonColors(Color.White),
-                        contentPadding = PaddingValues(12.dp)
-                        ) {
-                        Icon(
-                            tint = mainColor,
-                            imageVector = ImageVector.vectorResource(id = R.drawable.ic_minus),
-                            contentDescription = null
-                        )
-                    }
-                    Text(text = viewModel.buyCounter.intValue.toString())
-                    Button(onClick = { viewModel.buyCounter.intValue += 1 },
-                        colors = ButtonDefaults.buttonColors(Color.White),
-                        shape = RoundedCornerShape(8.dp),
-                        contentPadding = PaddingValues(12.dp)
-                    ) {
-                        Icon(
-                            tint = mainColor,
-                            imageVector = ImageVector.vectorResource(id = R.drawable.ic_plus),
-                            contentDescription = "plus"
-                        )
-                    }
-                }
+                ToCount(viewModel = viewModel)
             }
+        }
+    }
+}
+@Composable
+fun AddToCart(
+    viewModel: CatalogViewModel,
+    product: Products
+){
+    Button(
+        colors = ButtonDefaults.buttonColors(Color.White),
+        shape = RectangleShape,
+        modifier = Modifier
+            .padding(top = 12.dp)
+            .clip(RoundedCornerShape(8.dp))
+            .fillMaxWidth(),
+        onClick = {
+            /**
+             * Показать корзину
+             */
+        }
+    ) {
+        Text(
+            text = product.price_current.toString(),
+            color = Color.Black,
+            fontSize = 16.sp
+        )
+        ShowOldPrice(product = product)
+    }
+}
+
+@Composable
+fun ToCount(
+    viewModel: CatalogViewModel
+){
+    Row(
+        modifier = Modifier
+            .padding(top = 12.dp)
+            .fillMaxWidth(),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.SpaceBetween
+    ){
+        Button(onClick = {  },
+            shape = RoundedCornerShape(8.dp),
+            colors = ButtonDefaults.buttonColors(Color.White),
+            contentPadding = PaddingValues(12.dp)
+        ) {
+            Icon(
+                tint = mainColor,
+                imageVector = ImageVector.vectorResource(id = R.drawable.ic_minus),
+                contentDescription = null
+            )
+        }
+        Text(text = "totalSum")
+        Button(onClick = {  },
+            colors = ButtonDefaults.buttonColors(Color.White),
+            shape = RoundedCornerShape(8.dp),
+            contentPadding = PaddingValues(12.dp)
+        ) {
+            Icon(
+                tint = mainColor,
+                imageVector = ImageVector.vectorResource(id = R.drawable.ic_plus),
+                contentDescription = "plus"
+            )
         }
     }
 }

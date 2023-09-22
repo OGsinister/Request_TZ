@@ -16,7 +16,7 @@ import javax.inject.Inject
 class CatalogViewModel @Inject constructor(
     private val getCategories: GetCategoriesUseCase,
     private val getTags: GetTagsUseCase,
-    private val getProductsUseCase: GetProductsUseCase
+    private val getProducts: GetProductsUseCase
 ): ViewModel() {
     var isCartVisible = mutableStateOf(false)
     val buyCounter = mutableIntStateOf(0)
@@ -44,6 +44,6 @@ class CatalogViewModel @Inject constructor(
         _categories.value = getCategories.invoke()
     }
     fun getProducts(){
-        _products.value = getProductsUseCase.invoke(currentCategory.intValue)
+        _products.value = getProducts.invoke(currentCategory.intValue)
     }
 }
