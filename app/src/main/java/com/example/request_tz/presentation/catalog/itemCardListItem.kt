@@ -41,7 +41,7 @@ import com.example.request_tz.ui.theme.mainColor
 
 @Composable
 fun ItemCardListItem(itemCard: ItemCard){
-    val buyItem = remember{
+    val buyItem = remember {
         mutableIntStateOf(0)
     }
 
@@ -110,7 +110,6 @@ fun ItemCardListItem(itemCard: ItemCard){
                          * Показать корзину
                          */
                         isCartVisible.value = !isCartVisible.value
-                        //sum.floatValue += itemCard.priceCurrent
                         buyItem.intValue += 1
                     }
                 ) {
@@ -137,11 +136,12 @@ fun ItemCardListItem(itemCard: ItemCard){
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.SpaceBetween
                 ){
-                    Button(onClick = { buyItem.intValue -= 1 },
+                    Button(
+                        onClick = { buyItem.intValue -= 1 },
                         shape = RoundedCornerShape(8.dp),
                         colors = ButtonDefaults.buttonColors(Color.White),
                         contentPadding = PaddingValues(12.dp)
-                        ) {
+                    ) {
                         Icon(
                             tint = mainColor,
                             imageVector = ImageVector.vectorResource(id = R.drawable.ic_minus),

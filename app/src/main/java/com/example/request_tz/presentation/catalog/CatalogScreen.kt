@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Modifier
@@ -68,7 +67,7 @@ val ItemCardItems = listOf(
         description = "Ролл с нежным мясом камчатского краба, копченой курицей и авокадо.Украшается соусом\\\"Унаги\\\" и легким майонезом  Комплектуется бесплатным набором для роллов (Соевый соус Лайт 35г., васаби 6г., имбирь 15г.). +1 набор за каждые 600 рублей в заказе",
         image = 1,
         priceCurrent = 4700,
-        priceOld = 0,
+        priceOld = 4550,
         measure = 250,
         measure_unit = "г",
         tag_ids = listOf(
@@ -118,7 +117,6 @@ val ItemCardItems = listOf(
 )
 var currentCategory = mutableIntStateOf(tabItems[0].id)
 var isCartVisible = mutableStateOf(false)
-var sum = mutableFloatStateOf(0f)
 
 @Composable
 fun CatalogScreen(

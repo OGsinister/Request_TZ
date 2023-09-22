@@ -52,7 +52,7 @@ fun FixedCartButton() {
             )
             Spacer(modifier = Modifier.padding(5.dp))
             Text(
-                text = sum.floatValue.toString()
+                text = "buyItem.intValue.toString()"
             )
         }
     }
