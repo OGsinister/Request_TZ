@@ -38,7 +38,7 @@ fun NavGraph(
         }
 
         composable(Screens.Cart.route){
-            CartScreen()
+            CartScreen(navController)
         }
 
         composable(Screens.SplashScreen.route){

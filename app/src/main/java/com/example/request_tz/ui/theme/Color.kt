@@ -12,3 +12,4 @@ val Pink40 = Color(0xFF7D5260)
 
 val mainColor = Color(0xFFF15412)
 val cardBackground = Color(0xFFF5F5F5)
+val cartButtonColor = Color(0XFFF5F5F5)

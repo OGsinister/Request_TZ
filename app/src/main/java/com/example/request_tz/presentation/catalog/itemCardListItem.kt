@@ -110,12 +110,6 @@ fun ItemCardListItem(
             }else{
                 ToCount(viewModel = viewModel, product = product, counter)
             }
-
-            /*if(counter.intValue <= 0){
-                AddToCart(viewModel = viewModel, product = product, counter)
-            }else{
-                ToCount(viewModel = viewModel, product = product, counter)
-            }*/
         }
     }
 }
