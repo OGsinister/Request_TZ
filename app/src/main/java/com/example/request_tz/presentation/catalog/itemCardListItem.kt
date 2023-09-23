@@ -1,5 +1,6 @@
 package com.example.request_tz.presentation.catalog
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -19,6 +20,9 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableIntState
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -46,6 +50,9 @@ fun ItemCardListItem(
     viewModel: CatalogViewModel,
     navController: NavController
 ){
+    val counter = remember{
+        mutableIntStateOf(0)
+    }
     Card(
         colors = CardDefaults.cardColors(cardBackground),
         modifier = Modifier
@@ -98,18 +105,25 @@ fun ItemCardListItem(
                 color = Color.Black.copy(alpha = 0.6f)
             )
 
-            if(viewModel.buyCounter.intValue == 0){
-                AddToCart(viewModel = viewModel, product = product)
+            if(counter.intValue == 0){
+                AddToCart(viewModel = viewModel, product = product, counter)
             }else{
-                ToCount(viewModel = viewModel)
+                ToCount(viewModel = viewModel, product = product, counter)
             }
+
+            /*if(counter.intValue <= 0){
+                AddToCart(viewModel = viewModel, product = product, counter)
+            }else{
+                ToCount(viewModel = viewModel, product = product, counter)
+            }*/
         }
     }
 }
 @Composable
 fun AddToCart(
     viewModel: CatalogViewModel,
-    product: Products
+    product: Products,
+    counter: MutableIntState
 ){
     Button(
         colors = ButtonDefaults.buttonColors(Color.White),
@@ -122,6 +136,8 @@ fun AddToCart(
             /**
              * Показать корзину
              */
+            viewModel.addToCart(product)
+            counter.intValue++
         }
     ) {
         Text(
@@ -133,9 +149,12 @@ fun AddToCart(
     }
 }
 
+@SuppressLint("RememberReturnType")
 @Composable
 fun ToCount(
-    viewModel: CatalogViewModel
+    viewModel: CatalogViewModel,
+    product: Products,
+    counter: MutableIntState
 ){
     Row(
         modifier = Modifier
@@ -144,7 +163,10 @@ fun ToCount(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
     ){
-        Button(onClick = {  },
+        Button(onClick = {
+            viewModel.removeFromCart(product)
+            counter.intValue--
+        },
             shape = RoundedCornerShape(8.dp),
             colors = ButtonDefaults.buttonColors(Color.White),
             contentPadding = PaddingValues(12.dp)
@@ -155,8 +177,11 @@ fun ToCount(
                 contentDescription = null
             )
         }
-        Text(text = "totalSum")
-        Button(onClick = {  },
+        Text(text = counter.intValue.toString())
+        Button(onClick = {
+            viewModel.addToCart(product)
+            counter.intValue++
+        },
             colors = ButtonDefaults.buttonColors(Color.White),
             shape = RoundedCornerShape(8.dp),
             contentPadding = PaddingValues(12.dp)
@@ -164,7 +189,7 @@ fun ToCount(
             Icon(
                 tint = mainColor,
                 imageVector = ImageVector.vectorResource(id = R.drawable.ic_plus),
-                contentDescription = "plus"
+                contentDescription = null
             )
         }
     }

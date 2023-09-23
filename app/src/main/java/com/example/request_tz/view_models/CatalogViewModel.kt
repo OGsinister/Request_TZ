@@ -18,8 +18,8 @@ class CatalogViewModel @Inject constructor(
     private val getTags: GetTagsUseCase,
     private val getProducts: GetProductsUseCase
 ): ViewModel() {
-    var isCartVisible = mutableStateOf(false)
-    val buyCounter = mutableIntStateOf(0)
+    private val _isCartVisible = mutableStateOf(false)
+    var isCartVisible = _isCartVisible
 
     private val _categories = mutableStateOf(listOf(Categories()))
     var categories = _categories
@@ -29,6 +29,21 @@ class CatalogViewModel @Inject constructor(
 
     private val _products = mutableStateOf(listOf(Products()))
     var products = _products
+
+    private val _totalSum = mutableIntStateOf(0)
+    var totalSum = _totalSum
+
+    private val _order = mutableStateOf(listOf(Products()))
+    var order = _order
+
+    fun addToCart(products: Products){
+        _order.value += products
+        _totalSum.intValue += products.price_current!!
+    }
+    fun removeFromCart(products: Products){
+        _order.value -= products
+        _totalSum.intValue -= products.price_current!!
+    }
 
     private val _tags = mutableStateOf(listOf(Tags()))
     var tags = _tags

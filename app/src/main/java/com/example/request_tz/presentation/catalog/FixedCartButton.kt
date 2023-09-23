@@ -20,40 +20,44 @@ import com.example.request_tz.ui.theme.mainColor
 import com.example.request_tz.view_models.CatalogViewModel
 @Composable
 fun FixedCartButton(viewModel: CatalogViewModel) {
-    /**
-     * navigate to Cart screen
-     */
     Column(
         modifier = Modifier
             .fillMaxWidth(),
-        verticalArrangement = Arrangement.Center,
+        verticalArrangement = Arrangement.Bottom,
         horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Button(
-            shape = RoundedCornerShape(8.dp),
+    ){
+        Column(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(
-                    top = 12.dp,
-                    start = 16.dp,
-                    end = 16.dp,
-                    bottom = 12.dp
-                ),
-            onClick = {
-                /**
-                 * navigate to Cart screen
-                 */
-            },
-            colors = ButtonDefaults.buttonColors(mainColor)
+                .fillMaxWidth(),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Icon(
-                painter = painterResource(id = R.drawable.ic_cart),
-                contentDescription = null
-            )
-            Spacer(modifier = Modifier.padding(5.dp))
-            Text(
-                text = viewModel.buyCounter.intValue.toString()
-            )
+            Button(
+                shape = RoundedCornerShape(8.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(
+                        top = 12.dp,
+                        start = 16.dp,
+                        end = 16.dp,
+                        bottom = 12.dp
+                    ),
+                onClick = {
+                    /**
+                     * navigate to Cart screen
+                     */
+                },
+                colors = ButtonDefaults.buttonColors(mainColor)
+            ) {
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_cart),
+                    contentDescription = null
+                )
+                Spacer(modifier = Modifier.padding(5.dp))
+                Text(
+                    text = viewModel.totalSum.intValue.toString()
+                )
+            }
         }
     }
 }
