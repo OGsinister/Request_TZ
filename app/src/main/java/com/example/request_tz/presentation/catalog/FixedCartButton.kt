@@ -15,11 +15,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.example.request_tz.R
+import com.example.request_tz.navigation.Screens
 import com.example.request_tz.ui.theme.mainColor
 import com.example.request_tz.view_models.CatalogViewModel
 @Composable
-fun FixedCartButton(viewModel: CatalogViewModel) {
+fun FixedCartButton(
+    viewModel: CatalogViewModel,
+    navController: NavController
+) {
     Column(
         modifier = Modifier
             .fillMaxWidth(),
@@ -43,9 +48,9 @@ fun FixedCartButton(viewModel: CatalogViewModel) {
                         bottom = 12.dp
                     ),
                 onClick = {
-                    /**
-                     * navigate to Cart screen
-                     */
+                    navController.navigate(
+                        Screens.Cart.route
+                    )
                 },
                 colors = ButtonDefaults.buttonColors(mainColor)
             ) {

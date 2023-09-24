@@ -28,6 +28,8 @@ fun CategoryList(
 ){
     val currentCategory = viewModel.currentCategory.intValue
     val columnColor = if (category.id == currentCategory) mainColor else Color.Transparent
+    val textColor = if(category.id == currentCategory) Color.White else Color.Black
+
     Column(
         modifier = Modifier
              .clip(RoundedCornerShape(8.dp))
@@ -49,10 +51,7 @@ fun CategoryList(
                 Text(
                     text = it,
                     fontSize = 16.sp,
-                    color = if(category.id == currentCategory)
-                        Color.White
-                    else
-                        Color.Black
+                    color = textColor
                 )
             }
         }

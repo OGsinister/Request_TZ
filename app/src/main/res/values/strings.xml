@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Request_TZ</string>
+
+    <string name="empty_cart">Пусто, выберите блюда в каталоге :)</string>
 </resources>

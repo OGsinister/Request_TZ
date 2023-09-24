@@ -1,12 +1,10 @@
 package com.example.request_tz.presentation.catalog
 
-import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -17,20 +15,14 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableIntState
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -39,9 +31,9 @@ import com.example.request_tz.R
 import com.example.request_tz.domain.model.Products
 import com.example.request_tz.navigation.Screens
 import com.example.request_tz.presentation.util.GetTag
+import com.example.request_tz.presentation.util.ShowCounter
 import com.example.request_tz.presentation.util.ShowOldPrice
 import com.example.request_tz.ui.theme.cardBackground
-import com.example.request_tz.ui.theme.mainColor
 import com.example.request_tz.view_models.CatalogViewModel
 
 @Composable
@@ -50,9 +42,6 @@ fun ItemCardListItem(
     viewModel: CatalogViewModel,
     navController: NavController
 ){
-    val counter = remember{
-        mutableIntStateOf(0)
-    }
     Card(
         colors = CardDefaults.cardColors(cardBackground),
         modifier = Modifier
@@ -104,11 +93,10 @@ fun ItemCardListItem(
                 text = "${product.measure} ${product.measure_unit}",
                 color = Color.Black.copy(alpha = 0.6f)
             )
-
-            if(counter.intValue == 0){
-                AddToCart(viewModel = viewModel, product = product, counter)
+            if(viewModel.totalSum.intValue == 0){
+                AddToCart(viewModel = viewModel, product = product)
             }else{
-                ToCount(viewModel = viewModel, product = product, counter)
+                ShowCounter(viewModel = viewModel, product = product)
             }
         }
     }
@@ -116,8 +104,7 @@ fun ItemCardListItem(
 @Composable
 fun AddToCart(
     viewModel: CatalogViewModel,
-    product: Products,
-    counter: MutableIntState
+    product: Products
 ){
     Button(
         colors = ButtonDefaults.buttonColors(Color.White),
@@ -127,11 +114,7 @@ fun AddToCart(
             .clip(RoundedCornerShape(8.dp))
             .fillMaxWidth(),
         onClick = {
-            /**
-             * Показать корзину
-             */
             viewModel.addToCart(product)
-            counter.intValue++
         }
     ) {
         Text(
@@ -140,51 +123,5 @@ fun AddToCart(
             fontSize = 16.sp
         )
         ShowOldPrice(product = product)
-    }
-}
-
-@SuppressLint("RememberReturnType")
-@Composable
-fun ToCount(
-    viewModel: CatalogViewModel,
-    product: Products,
-    counter: MutableIntState
-){
-    Row(
-        modifier = Modifier
-            .padding(top = 12.dp)
-            .fillMaxWidth(),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.SpaceBetween
-    ){
-        Button(onClick = {
-            viewModel.removeFromCart(product)
-            counter.intValue--
-        },
-            shape = RoundedCornerShape(8.dp),
-            colors = ButtonDefaults.buttonColors(Color.White),
-            contentPadding = PaddingValues(12.dp)
-        ) {
-            Icon(
-                tint = mainColor,
-                imageVector = ImageVector.vectorResource(id = R.drawable.ic_minus),
-                contentDescription = null
-            )
-        }
-        Text(text = counter.intValue.toString())
-        Button(onClick = {
-            viewModel.addToCart(product)
-            counter.intValue++
-        },
-            colors = ButtonDefaults.buttonColors(Color.White),
-            shape = RoundedCornerShape(8.dp),
-            contentPadding = PaddingValues(12.dp)
-        ) {
-            Icon(
-                tint = mainColor,
-                imageVector = ImageVector.vectorResource(id = R.drawable.ic_plus),
-                contentDescription = null
-            )
-        }
     }
 }

@@ -18,22 +18,19 @@ class CatalogViewModel @Inject constructor(
     private val getTags: GetTagsUseCase,
     private val getProducts: GetProductsUseCase
 ): ViewModel() {
-    private val _isCartVisible = mutableStateOf(false)
-    var isCartVisible = _isCartVisible
-
     private val _categories = mutableStateOf(listOf(Categories()))
     var categories = _categories
 
     private var _currentCategory = mutableIntStateOf(676153)
     var currentCategory = _currentCategory
 
-    private val _products = mutableStateOf(listOf(Products()))
+    private val _products = mutableStateOf<List<Products>>(emptyList())
     var products = _products
 
     private val _totalSum = mutableIntStateOf(0)
     var totalSum = _totalSum
 
-    private val _order = mutableStateOf(listOf(Products()))
+    private val _order = mutableStateOf<List<Products>>(emptyList())
     var order = _order
 
     fun addToCart(products: Products){
