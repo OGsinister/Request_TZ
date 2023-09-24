@@ -28,7 +28,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.request_tz.R
 import com.example.request_tz.domain.model.Products
-import com.example.request_tz.presentation.util.ShowCounter
 import com.example.request_tz.ui.theme.cartButtonColor
 import com.example.request_tz.ui.theme.mainColor
 import com.example.request_tz.view_models.CatalogViewModel
@@ -65,7 +64,7 @@ fun CartProductItem(
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.Start
                 ){
-                    Text(text = products.name.toString())
+                    Text(text = products.name)
                 }
                 Row(
                     horizontalArrangement = Arrangement.spacedBy(16.dp)

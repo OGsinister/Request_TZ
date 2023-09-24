@@ -10,6 +10,7 @@ import androidx.navigation.navArgument
 import com.example.request_tz.presentation.card_item.CardItemScreen
 import com.example.request_tz.presentation.cart.CartScreen
 import com.example.request_tz.presentation.catalog.CatalogScreen
+import com.example.request_tz.presentation.search.SearchScreen
 import com.example.request_tz.presentation.splash_screen.SplashScreen
 import com.example.request_tz.view_models.CatalogViewModel
 
@@ -20,7 +21,7 @@ fun NavGraph(
 ) {
     NavHost(
         navController = navController,
-        startDestination = Screens.SplashScreen.route
+        startDestination = Screens.Splash.route
     ) {
         composable(Screens.Catalog.route){
             CatalogScreen(viewModel, navController = navController)
@@ -41,8 +42,12 @@ fun NavGraph(
             CartScreen(navController, viewModel)
         }
 
-        composable(Screens.SplashScreen.route){
+        composable(Screens.Splash.route){
             SplashScreen(navController)
+        }
+
+        composable(Screens.Search.route){
+            SearchScreen(viewModel, navController)
         }
     }
 }

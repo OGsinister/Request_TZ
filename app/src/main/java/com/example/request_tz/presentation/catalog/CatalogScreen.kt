@@ -44,7 +44,7 @@ fun CatalogScreen(
                 )
                 .weight(1f)
         ) {
-            TopLine()
+            TopLine(navController)
             Categories(categories.value, viewModel)
             ItemCardList(products.value, viewModel, navController)
         }

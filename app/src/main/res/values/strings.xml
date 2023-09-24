@@ -3,4 +3,9 @@
 
     <string name="empty_cart">Пусто, выберите блюда в каталоге :)</string>
     <string name="cart">Корзина</string>
+
+    <!--Search screen-->
+    <string name="default_search_text">Найти блюдо</string>
+    <string name="start_search_content_text">Введите название блюда, которое ищите</string>
+    <string name="not_found">Ничего не нашлось ): </string>
 </resources>

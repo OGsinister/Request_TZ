@@ -12,10 +12,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.example.request_tz.R
+import com.example.request_tz.navigation.Screens
 
 @Composable
-fun TopLine(){
+fun TopLine(
+    navController: NavController
+){
     Row(
         modifier = Modifier
             .fillMaxWidth(),
@@ -38,11 +42,13 @@ fun TopLine(){
             painter = painterResource(id = R.drawable.ic_logo),
             contentDescription = null
         )
-        Icon(
-            modifier = Modifier
-                .padding(10.dp),
-            painter = painterResource(id = R.drawable.ic_search),
-            contentDescription = null
-        )
+        IconButton(onClick = { navController.navigate(Screens.Search.route) }) {
+            Icon(
+                modifier = Modifier
+                    .padding(10.dp),
+                painter = painterResource(id = R.drawable.ic_search),
+                contentDescription = null
+            )
+        }
     }
 }

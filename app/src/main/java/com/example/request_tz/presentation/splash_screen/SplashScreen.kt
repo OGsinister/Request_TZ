@@ -62,7 +62,7 @@ fun SplashScreen(navController: NavController) {
                 // Перехожу на экран Catalog
                 navController.navigate(Screens.Catalog.route){
                     // Запрет на переход splash экрана
-                    popUpTo(Screens.SplashScreen.route){
+                    popUpTo(Screens.Splash.route){
                         inclusive = true
                     }
                 }

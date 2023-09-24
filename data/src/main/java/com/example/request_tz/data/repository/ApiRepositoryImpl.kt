@@ -21,6 +21,11 @@ class ApiRepositoryImpl @Inject constructor(
             it.category_id == categoryId
         }
     }
+    override fun getProductsBySearch(text: String): List<Products> {
+        return Products().getJsonData(context).filter {
+            it.name == text
+        }
+    }
     override fun getTags(): List<Tags> {
         return Tags().getJsonData(context)
     }
@@ -31,7 +36,6 @@ fun Gson.getDataFromApi(name: String, context: Context): String {
         .bufferedReader()
         .use { it.readText() }
 }
-
 fun Products.getJsonData(@ApplicationContext context: Context): List<Products> {
     return json.fromJson(
         json.getDataFromApi("Products",context), Array<Products>::class.java
