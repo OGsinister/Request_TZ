@@ -41,7 +41,6 @@ fun CardItemScreen(
     val product = viewModel.products.value.find {
         it.id == id.toInt()
     }
-
     Column(
         modifier = Modifier
             .fillMaxSize()

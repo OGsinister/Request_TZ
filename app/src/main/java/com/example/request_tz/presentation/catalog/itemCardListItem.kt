@@ -101,6 +101,7 @@ fun ItemCardListItem(
         }
     }
 }
+
 @Composable
 fun AddToCart(
     viewModel: CatalogViewModel,
