@@ -21,11 +21,15 @@ class ApiRepositoryImpl @Inject constructor(
             it.category_id == categoryId
         }
     }
-    override fun getProductsBySearch(text: String): List<Products> {
+    override fun getAllProducts(): List<Products> {
+        return Products().getJsonData(context)
+    }
+    override fun getProductByTags(listId: List<Int>, categoryId: Int): List<Products> {
         return Products().getJsonData(context).filter {
-            it.name == text
+            it.category_id == categoryId && it.tag_ids!!.containsAll(listId)
         }
     }
+
     override fun getTags(): List<Tags> {
         return Tags().getJsonData(context)
     }
