@@ -14,5 +14,6 @@ data class Products(
     val price_current: Int? = null,
     val price_old: Int? = null,
     val proteins_per_100_grams: Double? = null,
-    val tag_ids: List<Int>? = null
+    val tag_ids: List<Int>? = null,
+    var quantity: Int = 0,
 )

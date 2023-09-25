@@ -8,4 +8,21 @@
     <string name="default_search_text">Найти блюдо</string>
     <string name="start_search_content_text">Введите название блюда, которое ищите</string>
     <string name="not_found">Ничего не нашлось ): </string>
+
+    <!-- Filter dialog-->
+    <string name="bottomSheetDialogButton">Готово</string>
+    <string name="pick_up_product">Подобрать блюдо</string>
+    <string name="Order_for_price">Заказать за </string>
+    <string name="not_found_filters_products">Таких блюд нет ): Попробуйте изменить фильтры</string>
+
+    <!-- Filters content-->
+    <string name="weight">Вес</string>
+    <string name="energy_value">Энерг. ценность</string>
+    <string name="kcal">ккал</string>
+    <string name="proteins">Белки</string>
+    <string name="fats">Жиры</string>
+    <string name="carbohydrates">Углеводы</string>
+
+    <!-- Cart -->
+    <string name="ToastBought">Куплено :)</string>
 </resources>
