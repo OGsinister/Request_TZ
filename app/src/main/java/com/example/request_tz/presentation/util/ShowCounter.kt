@@ -1,5 +1,13 @@
 package com.example.request_tz.presentation.util
 
+import android.annotation.SuppressLint
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.SizeTransform
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
+import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -11,8 +19,6 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -22,11 +28,12 @@ import androidx.compose.ui.unit.dp
 import com.example.request_tz.R
 import com.example.request_tz.domain.model.Products
 import com.example.request_tz.ui.theme.mainColor
-import com.example.request_tz.view_models.CatalogViewModel
+import com.example.request_tz.view_model.MainViewModel
 
+@SuppressLint("UnusedContentLambdaTargetStateParameter")
 @Composable
 fun ShowCounter(
-    viewModel: CatalogViewModel,
+    viewModel: MainViewModel,
     product: Products
 ){
     Row(
@@ -49,7 +56,24 @@ fun ShowCounter(
                 contentDescription = null
             )
         }
-        Text(text = "count")
+        AnimatedContent(
+            targetState = product.quantity.toString(),
+            label = "",
+            transitionSpec = {
+                if (targetState > initialState) {
+                    (slideInVertically { height -> height } + fadeIn()).togetherWith(
+                        slideOutVertically { height -> -height } + fadeOut())
+                } else {
+                    (slideInVertically { height -> -height } + fadeIn()).togetherWith(
+                        slideOutVertically { height -> height } + fadeOut())
+                }.using(
+                    SizeTransform(clip = false)
+                )
+            }
+        ) {
+            Text(text = product.quantity.toString())
+        }
+
         Button(onClick = {
             viewModel.addToCart(product)
         },

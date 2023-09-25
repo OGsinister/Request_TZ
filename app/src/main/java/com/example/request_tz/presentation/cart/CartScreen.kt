@@ -1,14 +1,19 @@
 package com.example.request_tz.presentation.cart
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
@@ -23,26 +28,38 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.request_tz.R
 import com.example.request_tz.navigation.Screens
+import com.example.request_tz.presentation.util.Symbols
 import com.example.request_tz.ui.theme.mainColor
-import com.example.request_tz.view_models.CatalogViewModel
-
+import com.example.request_tz.view_model.MainViewModel
 @Composable
 fun CartScreen(
     navController: NavController,
-    viewModel: CatalogViewModel
+    viewModel: MainViewModel
 ) {
     val clientOrder = viewModel.order
-    
-    Column(modifier = Modifier.fillMaxSize()) {
-        Header(navController = navController)
-        if(viewModel.totalSum.intValue != 0){
-            LazyColumn{
-                items(clientOrder.value){
-                    CartProductItem(it, viewModel)
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxHeight(),
+            verticalArrangement = Arrangement.SpaceBetween
+        ){
+            Header(navController = navController)
+            Column(modifier = Modifier.weight(1f)) {
+                if(viewModel.totalPrice.intValue != 0){
+                    LazyColumn{
+                        items(clientOrder.value){
+                            CartProductItem(it, viewModel)
+                        }
+                    }
+                }else{
+                    EmptyCartScreen()
                 }
             }
-        }else{
-            EmptyCartScreen()
+            OrderForPriceButton(viewModel = viewModel, navController)
         }
     }
 }
@@ -78,8 +95,6 @@ fun Header(
         }
     }
 }
-
-
 @Composable
 fun EmptyCartScreen(){
     Column(
@@ -95,5 +110,54 @@ fun EmptyCartScreen(){
                 .width(240.dp),
             color = Color.Black.copy(alpha = 0.6f)
         )
+    }
+}
+@Composable
+fun OrderForPriceButton(viewModel: MainViewModel, navController: NavController){
+    Column(
+        modifier = Modifier
+            .fillMaxWidth(),
+        verticalArrangement = Arrangement.Bottom,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ){
+        Column(
+            modifier = Modifier
+                .fillMaxWidth(),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            AnimatedVisibility(visible = viewModel.totalPrice.intValue != 0) {
+                Button(
+                    shape = RoundedCornerShape(8.dp),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(
+                            top = 12.dp,
+                            start = 16.dp,
+                            end = 16.dp,
+                            bottom = 12.dp
+                        ),
+                    onClick = {
+                        navController.navigate(Screens.Catalog.route)
+                        /**
+                         * Показать Toast
+                         */
+                        viewModel.bought.value = true
+                    },
+                    colors = ButtonDefaults.buttonColors(mainColor)
+                ) {
+                    Text(
+                        text = stringResource(id = R.string.Order_for_price),
+                        modifier = Modifier.padding(end = 10.dp),
+                        color = Color.White
+                    )
+                    Text(
+                        text = "${viewModel.totalPrice.intValue} ${Symbols.ruble}",
+                        modifier = Modifier.padding(end = 2.dp),
+                        color = Color.White
+                    )
+                }
+            }
+        }
     }
 }

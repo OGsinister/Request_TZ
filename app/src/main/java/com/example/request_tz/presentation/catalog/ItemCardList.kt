@@ -10,12 +10,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.request_tz.domain.model.Products
-import com.example.request_tz.view_models.CatalogViewModel
-
+import com.example.request_tz.view_model.MainViewModel
 @Composable
 fun ItemCardList(
     category: List<Products>,
-    viewModel: CatalogViewModel,
+    viewModel: MainViewModel,
     navController: NavController
 ){
     LazyVerticalGrid(

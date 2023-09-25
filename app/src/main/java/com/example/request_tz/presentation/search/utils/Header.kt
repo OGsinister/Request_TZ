@@ -22,12 +22,11 @@ import androidx.navigation.NavController
 import com.example.request_tz.R
 import com.example.request_tz.navigation.Screens
 import com.example.request_tz.ui.theme.mainColor
-import com.example.request_tz.view_models.CatalogViewModel
-
+import com.example.request_tz.view_model.MainViewModel
 @Composable
 fun Header(
     navController: NavController,
-    viewModel: CatalogViewModel
+    viewModel: MainViewModel
 ) {
     val searchText = viewModel.searchText.collectAsState()
     Row(
@@ -47,7 +46,7 @@ fun Header(
 
 @Composable
 fun SearchBar(
-    viewModel: CatalogViewModel,
+    viewModel: MainViewModel,
     searchText: State<String>,
     navController: NavController
 ){

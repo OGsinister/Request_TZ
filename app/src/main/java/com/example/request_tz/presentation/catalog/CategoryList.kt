@@ -19,12 +19,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.request_tz.domain.model.Categories
 import com.example.request_tz.ui.theme.mainColor
-import com.example.request_tz.view_models.CatalogViewModel
-
+import com.example.request_tz.view_model.MainViewModel
 @Composable
 fun CategoryList(
     category: Categories,
-    viewModel: CatalogViewModel
+    viewModel: MainViewModel
 ){
     val currentCategory = viewModel.currentCategory.intValue
     val columnColor = if (category.id == currentCategory) mainColor else Color.Transparent
@@ -43,7 +42,11 @@ fun CategoryList(
         Button(
             onClick = {
                 viewModel.changeCategory(category.id!!)
-                viewModel.getProducts()
+                if(viewModel.filtersCheckedState.isNotEmpty()){
+                    viewModel.showCheckedProducts()
+                }else{
+                    viewModel.getProductByCategory()
+                }
             },
             colors = ButtonDefaults.buttonColors(Color.Transparent)
         ) {

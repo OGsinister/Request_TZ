@@ -1,6 +1,5 @@
 package com.example.request_tz.presentation.splash_screen
 
-import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -26,8 +25,6 @@ import com.airbnb.lottie.compose.rememberLottieDynamicProperty
 import com.example.request_tz.R
 import com.example.request_tz.navigation.Screens
 import com.example.request_tz.ui.theme.mainColor
-
-@SuppressLint("CoroutineCreationDuringComposition")
 @Composable
 fun SplashScreen(navController: NavController) {
     Column(
@@ -44,7 +41,9 @@ fun SplashScreen(navController: NavController) {
             composition = composition,
             iterations = 1
         )
-        // меняю цвет анимации на белый, так как он выводится черным
+        /**
+         * меняю цвет анимации на белый, так как он выводится черным
+         */
         val dynamicProperties = rememberLottieDynamicProperties(
             rememberLottieDynamicProperty(
                 property = LottieProperty.COLOR_FILTER,
@@ -59,9 +58,13 @@ fun SplashScreen(navController: NavController) {
         )
         LaunchedEffect(key1 = progress){
             if(progress >= 1f){
-                // Перехожу на экран Catalog
+                /**
+                 * Перехожу на экран Catalog
+                 */
                 navController.navigate(Screens.Catalog.route){
-                    // Запрет на переход splash экрана
+                    /**
+                     * Запрет на переход splash экрана
+                     */
                     popUpTo(Screens.Splash.route){
                         inclusive = true
                     }

@@ -1,5 +1,13 @@
 package com.example.request_tz.presentation.cart
 
+import android.annotation.SuppressLint
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.SizeTransform
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
+import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -30,12 +38,11 @@ import com.example.request_tz.R
 import com.example.request_tz.domain.model.Products
 import com.example.request_tz.ui.theme.cartButtonColor
 import com.example.request_tz.ui.theme.mainColor
-import com.example.request_tz.view_models.CatalogViewModel
-
+import com.example.request_tz.view_model.MainViewModel
 @Composable
 fun CartProductItem(
     products: Products,
-    viewModel: CatalogViewModel
+    viewModel: MainViewModel
 ) {
     Column(
         modifier = Modifier
@@ -69,7 +76,7 @@ fun CartProductItem(
                 Row(
                     horizontalArrangement = Arrangement.spacedBy(16.dp)
                 ){
-                    Counter()
+                    Counter(products, viewModel)
                     Price(products)
                 }
             }
@@ -77,13 +84,16 @@ fun CartProductItem(
         Divider(color = Color.Black.copy(alpha = 0.12f), thickness = 2.dp)
     }
 }
+@SuppressLint("UnusedContentLambdaTargetStateParameter")
 @Composable
-fun Counter(){
+fun Counter(products: Products, viewModel: MainViewModel){
     Row(
         horizontalArrangement = Arrangement.spacedBy(8.dp),
         verticalAlignment = Alignment.CenterVertically
     ){
-        Button(onClick = {},
+        Button(onClick = {
+            viewModel.removeFromCart(products)
+        },
             shape = RoundedCornerShape(8.dp),
             colors = ButtonDefaults.buttonColors(cartButtonColor),
             contentPadding = PaddingValues(12.dp)
@@ -94,8 +104,27 @@ fun Counter(){
                 contentDescription = null
             )
         }
-        Text(text = "1")
-        Button(onClick = {},
+        AnimatedContent(
+            targetState = products.quantity.toString(),
+            label = "",
+            transitionSpec = {
+                if (targetState > initialState) {
+                    (slideInVertically { height -> height } + fadeIn()).togetherWith(
+                        slideOutVertically { height -> -height } + fadeOut())
+                } else {
+                    (slideInVertically { height -> -height } + fadeIn()).togetherWith(
+                        slideOutVertically { height -> height } + fadeOut())
+                }.using(
+                    SizeTransform(clip = false)
+                )
+            }
+        ) {
+            Text(text = products.quantity.toString())
+        }
+
+        Button(onClick = {
+            viewModel.addToCart(products)
+        },
             colors = ButtonDefaults.buttonColors(cartButtonColor),
             shape = RoundedCornerShape(8.dp),
             contentPadding = PaddingValues(12.dp)
@@ -108,7 +137,6 @@ fun Counter(){
         }
     }
 }
-
 @Composable
 fun Price(products: Products){
     Column(

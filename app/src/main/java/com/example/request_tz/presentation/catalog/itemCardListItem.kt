@@ -33,13 +33,13 @@ import com.example.request_tz.navigation.Screens
 import com.example.request_tz.presentation.util.GetTag
 import com.example.request_tz.presentation.util.ShowCounter
 import com.example.request_tz.presentation.util.ShowOldPrice
+import com.example.request_tz.presentation.util.Symbols
 import com.example.request_tz.ui.theme.cardBackground
-import com.example.request_tz.view_models.CatalogViewModel
-
+import com.example.request_tz.view_model.MainViewModel
 @Composable
 fun ItemCardListItem(
     product: Products,
-    viewModel: CatalogViewModel,
+    viewModel: MainViewModel,
     navController: NavController
 ){
     Card(
@@ -85,7 +85,7 @@ fun ItemCardListItem(
             verticalArrangement = Arrangement.spacedBy(4.dp)
         ){
             Text(
-                text = product.name!!,
+                text = product.name,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis
             )
@@ -93,7 +93,7 @@ fun ItemCardListItem(
                 text = "${product.measure} ${product.measure_unit}",
                 color = Color.Black.copy(alpha = 0.6f)
             )
-            if(viewModel.totalSum.intValue == 0){
+            if(product.quantity == 0){
                 AddToCart(viewModel = viewModel, product = product)
             }else{
                 ShowCounter(viewModel = viewModel, product = product)
@@ -104,7 +104,7 @@ fun ItemCardListItem(
 
 @Composable
 fun AddToCart(
-    viewModel: CatalogViewModel,
+    viewModel: MainViewModel,
     product: Products
 ){
     Button(
@@ -119,9 +119,9 @@ fun AddToCart(
         }
     ) {
         Text(
-            text = product.price_current.toString(),
+            text = "${product.price_current} ${Symbols.ruble}",
             color = Color.Black,
-            fontSize = 16.sp
+            fontSize = 12.sp
         )
         ShowOldPrice(product = product)
     }

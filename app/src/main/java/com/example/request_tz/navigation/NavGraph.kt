@@ -12,11 +12,10 @@ import com.example.request_tz.presentation.cart.CartScreen
 import com.example.request_tz.presentation.catalog.CatalogScreen
 import com.example.request_tz.presentation.search.SearchScreen
 import com.example.request_tz.presentation.splash_screen.SplashScreen
-import com.example.request_tz.view_models.CatalogViewModel
-
+import com.example.request_tz.view_model.MainViewModel
 @Composable
 fun NavGraph(
-    viewModel: CatalogViewModel = hiltViewModel(),
+    viewModel: MainViewModel = hiltViewModel(),
     navController: NavHostController
 ) {
     NavHost(
