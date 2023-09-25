@@ -57,6 +57,7 @@ BottomSheet в каталоге для фильтрации
   <li>Не показывается количество найденного в поиске товаров</li>
   <li>Не окрасил statusBar в белый и оранджевый цвет</li>
   <li>Не ставятся пробелы между цифрами</li>
+  <li>Не покрыл тестами, так как не имею опыта в этом</li>
 </ul>
 <h1>Preview</h1>
 <img src="https://github.com/OGsinister/Request_TZ/blob/master/preview.gif"></img>
