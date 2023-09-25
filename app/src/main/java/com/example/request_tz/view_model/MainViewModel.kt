@@ -53,6 +53,12 @@ class MainViewModel @Inject constructor(
     var filtersCheckedState = _filtersCheckedStates
 
     var bought = mutableStateOf(false)
+    fun resetCart(){
+        _totalPrice.intValue = 0
+        _products.value.forEach {
+            it.quantity = 0
+        }
+    }
     private fun getAllProducts(){
         _allProducts.value = getAllProducts.invoke()
     }

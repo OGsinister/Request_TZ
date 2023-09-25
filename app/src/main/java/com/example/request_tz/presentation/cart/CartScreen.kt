@@ -139,6 +139,7 @@ fun OrderForPriceButton(viewModel: MainViewModel, navController: NavController){
                         ),
                     onClick = {
                         navController.navigate(Screens.Catalog.route)
+                        viewModel.resetCart()
                         /**
                          * Показать Toast
                          */
