@@ -2,9 +2,9 @@ package com.example.request_tz.di
 
 import com.example.request_tz.data.repository.ApiRepositoryImpl
 import com.example.request_tz.domain.repository.ApiRepository
+import com.example.request_tz.domain.usecases.GetAllProductsUseCase
 import com.example.request_tz.domain.usecases.GetCategoriesUseCase
-import com.example.request_tz.domain.usecases.GetProductsBySearchUseCase
-import com.example.request_tz.domain.usecases.GetProductsUseCase
+import com.example.request_tz.domain.usecases.GetProductsByTagsUseCase
 import com.example.request_tz.domain.usecases.GetTagsUseCase
 import com.example.request_tz.domain.usecases.RequestAppUseCases
 import dagger.Module
@@ -28,8 +28,8 @@ object AppModule {
         return RequestAppUseCases(
             getCategoriesUseCase = GetCategoriesUseCase(repository),
             getTagsUseCase = GetTagsUseCase(repository),
-            getProductsUseCase = GetProductsUseCase(repository),
-            getProductsBySearchUseCase = GetProductsBySearchUseCase(repository)
+            getProductByTagsUseCase = GetProductsByTagsUseCase(repository),
+            getAllProductsUseCase = GetAllProductsUseCase(repository)
         )
     }
 }
