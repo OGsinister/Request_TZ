@@ -59,4 +59,4 @@ BottomSheet в каталоге для фильтрации
   <li>Не ставятся пробелы между цифрами</li>
 </ul>
 <h1>Preview</h1>
-![](preview.gif)
+<img src="https://github.com/OGsinister/Request_TZ/blob/master/preview.gif"></img>
