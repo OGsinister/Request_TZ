@@ -59,4 +59,4 @@ BottomSheet в каталоге для фильтрации
   <li>Не ставятся пробелы между цифрами</li>
 </ul>
 <h1>Preview</h1>
-![preview](https://github.com/OGsinister/Request_TZ/assets/105393838/55969440-1efd-454c-8d3f-77c279aa6d50)
+![preview](https://github.com/OGsinister/Request_TZ/assets/105393838/a5ede94d-9432-4213-ab14-779068b44ced)
