@@ -1,10 +1,8 @@
 <h1 align="center">RequestTz</h1>
 <h1>Ссылки:</h1>
 <ul>
-  <li>Резюме:</li>
-  <a href=https://hh.ru/resume/2bca8516ff0c5fb9e20039ed1f486b39684c6d></a>
-  <li>Сборки:</li>
-  <a href=https://drive.google.com/drive/folders/14ZX1msz32nQEkJVZbwtkBZtZE6l9vKc5?usp=sharing></a>
+  <li><a href=https://hh.ru/resume/2bca8516ff0c5fb9e20039ed1f486b39684c6d>Резюме</a></li>
+  <li><a href=https://drive.google.com/drive/folders/14ZX1msz32nQEkJVZbwtkBZtZE6l9vKc5?usp=sharing>Сборки</a></li>
 </ul>
 <h1 align="start">Тестовое задание</h1>
 <h3 align="start">Собрать мобильное приложние по доставке еды, по имеющемуся дизайну и API </h3>
