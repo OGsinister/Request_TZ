@@ -55,6 +55,9 @@ class MainViewModel @Inject constructor(
     var bought = mutableStateOf(false)
     fun resetCart(){
         _totalPrice.intValue = 0
+        _products.value.forEach {
+            it.quantity = 0
+        }
         _order.value = emptyList()
     }
     private fun getAllProducts(){
