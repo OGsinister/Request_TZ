@@ -58,3 +58,5 @@ BottomSheet в каталоге для фильтрации
   <li>Не окрасил statusBar в белый и оранджевый цвет</li>
   <li>Не ставятся пробелы между цифрами</li>
 </ul>
+<h1>Preview</h1>
+https://github.com/OGsinister/Request_TZ/assets/105393838/6de72eba-a00d-44b7-a27a-737de9879432
